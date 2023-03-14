@@ -6,7 +6,7 @@ const { configCloudinary } = require("./middlewares/files.middleware");
 const UserRoutes = require("./api/routes/users.routes");
 
 dotenv.config();
-//CONFIG CLOUDINARY
+//CONFIG CLOUDINARYYYYYYYYY
 configCloudinary();
 
 const PORT = process.env.PORT || 8081;
