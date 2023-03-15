@@ -11,14 +11,13 @@ const getAllComments = async (req, res, next) => {
 
 const createComment = async (req, res, next) => {
   try {
-    const { userfrom } = req.params;
     const { product } = req.params;
-    const { userto } = req.params;
+    const { id } = req.params;
     const comment = req.body.comment;
 
     const newComment = new Comment({
-      userfrom: userfrom,
-      userto: userto,
+      userfrom: req.user._id,
+      userto: id,
       product: product,
       comment: comment,
     });
