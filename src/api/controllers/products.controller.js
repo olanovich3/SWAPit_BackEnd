@@ -24,9 +24,7 @@ const createProduct = async (req, res, next) => {
   try {
     const newProduct = new Product({
       ...req.body,
-      images: req.file
-        ? req.file.path
-        : "https://res.cloudinary.com/dlvbfzkt9/image/upload/v1678116548/Resources/jh3tdhrmyrr0kulwykgl.png",
+      images: req.file ? req.file.path : "not found",
     });
 
     const createdProduct = await newProduct.save();
