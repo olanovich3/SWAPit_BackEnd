@@ -43,6 +43,7 @@ const ProductSchema = new mongoose.Schema(
       trim: true,
       enum: ["available", "reserved", "not available"],
     },
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,
