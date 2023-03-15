@@ -13,7 +13,7 @@ const ProductsRoutes = express.Router();
 ProductsRoutes.get("/", getAllProducts);
 ProductsRoutes.get("/:id", getProductByID);
 ProductsRoutes.post("/", upload.single("images"), createProduct);
-ProductsRoutes.patch("/:id", upload.array("images"), updateProduct);
+ProductsRoutes.patch("/:id", upload.single("images"), updateProduct);
 ProductsRoutes.delete("/:id", deleteProduct);
 
 module.exports = ProductsRoutes;
