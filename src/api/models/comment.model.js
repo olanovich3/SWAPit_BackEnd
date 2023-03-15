@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const CommentSchema = new mongoose.Schema(
   {
     userfrom: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    userto: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userto: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     comment: { type: String, required: true, trim: true },
-    rating: { type: Number, required: true, enum: [1, 2, 3, 4, 5] },
+    rating: { type: Number, required: false, enum: [1, 2, 3, 4, 5] },
   },
   {
     timestamps: true,

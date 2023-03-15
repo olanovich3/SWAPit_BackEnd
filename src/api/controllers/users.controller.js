@@ -26,7 +26,7 @@ const registerUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find().populate("comments");
     return res.status(200).json(allUsers);
   } catch (error) {
     return next("not user found", error);

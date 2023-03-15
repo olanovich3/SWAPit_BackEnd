@@ -11,7 +11,17 @@ const getAllComments = async (req, res, next) => {
 
 const createComment = async (req, res, next) => {
   try {
-    const newComment = new Comment(req.body);
+    const { userfrom } = req.params;
+    const { product } = req.params;
+    const { userto } = req.params;
+    const comment = req.body.comment;
+
+    const newComment = new Comment({
+      userfrom: userfrom,
+      userto: userto,
+      product: product,
+      comment: comment,
+    });
     const createdComment = await newComment.save();
     return res.status(201).json(createdComment);
   } catch (error) {

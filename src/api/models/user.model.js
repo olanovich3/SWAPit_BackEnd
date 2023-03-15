@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    chat: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
   },
   {
     timestamps: true,
