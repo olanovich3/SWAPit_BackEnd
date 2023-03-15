@@ -12,11 +12,13 @@ const registerUser = async (req, res, next) => {
         : "https://res.cloudinary.com/dlvbfzkt9/image/upload/v1678116548/Resources/jh3tdhrmyrr0kulwykgl.png",
     });
     const userExists = await User.findOne({ email: newUSer.email });
+    
     if (userExists) {
       return next("User already exists");
     }
     const createdUser = await newUSer.save();
     createdUser.password = null;
+    return res.status(201).json(createdUser)
   } catch (error) {
     return next(error);
   }
@@ -24,13 +26,12 @@ const registerUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await User.find()
-  return res.status(200).json(allUsers)
+    const allUsers = await User.find();
+    return res.status(200).json(allUsers);
   } catch (error) {
-    return next ('not user found', error)
+    return next("not user found", error);
   }
-  
-}
+};
 
 const loginUser = async (req, res, next) => {
   try {
@@ -59,8 +60,8 @@ const logoutUser = (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deletedUser = await User.findByIdAndDelete(id);
-    return res.status(200).json(deletedUser);
+    await User.findByIdAndDelete(id);
+    return res.status(200).json("user deleted");
   } catch (error) {
     return next("Error deleting user", error);
   }
@@ -86,7 +87,10 @@ const updateUser = async (req, res, next) => {
       newUser.image = req.file.path;
     }
     await User.findByIdAndUpdate(id, newUser);
-    return res.status(200).json(newUser);
+    return res.status(200).json({
+      new: newUser,
+      old: originalUser
+    });
   } catch (error) {
     return next(error);
   }
@@ -99,5 +103,5 @@ module.exports = {
   deleteUser,
   getUserById,
   updateUser,
-  getAllUsers
+  getAllUsers,
 };
