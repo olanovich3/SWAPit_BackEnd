@@ -7,15 +7,19 @@ const {
   deleteUser,
   getUserById,
   updateUser,
-  getAllUsers
+  getAllUsers,
 } = require("../controllers/users.controller");
+
+const { upload } = require("../../middlewares/files.middleware");
+const {isAuth} = require('../../middlewares/auth.middleware')
+
 
 UsersRoutes.get("/:id", getUserById);
 UsersRoutes.get("/", getAllUsers);
-UsersRoutes.post("/login", loginUser);
+UsersRoutes.post("/login",loginUser);
 UsersRoutes.post("/logout", logoutUser);
-UsersRoutes.post("/register", registerUser);
-UsersRoutes.patch("/:id", updateUser);
+UsersRoutes.post("/register", upload.single("image"), registerUser);
+UsersRoutes.patch("/:id", upload.single("image"), updateUser);
 UsersRoutes.delete("/:id", deleteUser);
 
 module.exports = UsersRoutes;
