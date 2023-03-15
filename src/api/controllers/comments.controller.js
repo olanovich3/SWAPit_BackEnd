@@ -1,4 +1,5 @@
 const Comment = require("../models/comment.model");
+const Product = require(`../models/product.model`);
 
 const getAllComments = async (req, res, next) => {
   try {
@@ -12,12 +13,12 @@ const getAllComments = async (req, res, next) => {
 const createComment = async (req, res, next) => {
   try {
     const { product } = req.params;
-    const { id } = req.params;
     const comment = req.body.comment;
-
+    const commentProduct = await Product.findById(product);
+    const owner = commentProduct.owner;
     const newComment = new Comment({
       userfrom: req.user._id,
-      userto: id,
+      userto: owner,
       product: product,
       comment: comment,
     });

@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
 
 const getAllProducts = async (req, res, next) => {
@@ -25,9 +26,14 @@ const createProduct = async (req, res, next) => {
     const newProduct = new Product({
       ...req.body,
       images: req.file ? req.file.path : "not found",
+      owner: req.user._id,
     });
 
+    const owner = req.user._id;
     const createdProduct = await newProduct.save();
+    await User.findByIdAndUpdate(owner, {
+      $push: { products: createdProduct },
+    });
 
     return res.status(201).json(createdProduct);
   } catch (error) {

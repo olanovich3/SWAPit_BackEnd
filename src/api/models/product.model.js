@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     images: { type: String, required: true, trim: true },
     description: { type: String, required: false, trim: true },
     location: {
