@@ -22,6 +22,16 @@ const registerUser = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const allUsers = await User.find()
+  return res.status(200).json(allUsers)
+  } catch (error) {
+    return next ('not user found', error)
+  }
+  
+}
+
 const loginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -89,4 +99,5 @@ module.exports = {
   deleteUser,
   getUserById,
   updateUser,
+  getAllUsers
 };
