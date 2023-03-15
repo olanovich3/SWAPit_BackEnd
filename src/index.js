@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const connect = require(`./utils/connect`);
 const { configCloudinary } = require("./middlewares/files.middleware");
 const UserRoutes = require("./api/routes/users.routes");
+const ProductsRoutes = require("./api/routes/products.routes");
 
 dotenv.config();
 //CONFIG CLOUDINARYYYYYYYYY
@@ -27,6 +28,7 @@ server.use(express.urlencoded({ limit: "5mb", extended: true }));
 //ROUTES
 
 server.use("/api/v1/users", UserRoutes);
+server.use("/api/v1/products", ProductsRoutes);
 
 //Route not found
 server.use("*", (req, res, next) => {

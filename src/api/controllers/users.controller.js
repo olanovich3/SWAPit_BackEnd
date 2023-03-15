@@ -12,13 +12,13 @@ const registerUser = async (req, res, next) => {
         : "https://res.cloudinary.com/dlvbfzkt9/image/upload/v1678116548/Resources/jh3tdhrmyrr0kulwykgl.png",
     });
     const userExists = await User.findOne({ email: newUSer.email });
-    
+
     if (userExists) {
       return next("User already exists");
     }
     const createdUser = await newUSer.save();
     createdUser.password = null;
-    return res.status(201).json(createdUser)
+    return res.status(201).json(createdUser);
   } catch (error) {
     return next(error);
   }
@@ -89,7 +89,7 @@ const updateUser = async (req, res, next) => {
     await User.findByIdAndUpdate(id, newUser);
     return res.status(200).json({
       new: newUser,
-      old: originalUser
+      old: originalUser,
     });
   } catch (error) {
     return next(error);
