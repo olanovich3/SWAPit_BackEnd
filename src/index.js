@@ -30,7 +30,7 @@ server.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 server.use("/api/v1/users", UserRoutes);
 server.use("/api/v1/products", ProductsRoutes);
-server.use("/api/v1/user/comments", CommentsRoutes);
+server.use("/api/v1/user/comments/", CommentsRoutes);
 
 //Route not found
 server.use("*", (req, res, next) => {

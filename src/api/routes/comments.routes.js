@@ -10,8 +10,8 @@ const {
 const CommentsRoutes = express.Router();
 
 CommentsRoutes.get("/", getAllComments);
-CommentsRoutes.post("/", [isAuth], createComment);
+CommentsRoutes.post("/:product", [isAuth], createComment);
 CommentsRoutes.patch("/", updateComment);
-CommentsRoutes.delete("/", deleteComment);
+CommentsRoutes.delete("/:id", deleteComment);
 
 module.exports = CommentsRoutes;
