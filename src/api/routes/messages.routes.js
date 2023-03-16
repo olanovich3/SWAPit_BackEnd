@@ -4,12 +4,14 @@ const {
   getAllMessages,
   deleteMessage,
   createMessage,
+  returMessage,
 } = require("../controllers/messages.controller");
 
 const MessagesRoutes = express.Router();
 
 MessagesRoutes.get("/", getAllMessages);
 MessagesRoutes.post("/:product", [isAuth], createMessage);
+MessagesRoutes.patch("/res/:id", returMessage);
 MessagesRoutes.delete("/:id", deleteMessage);
 
 module.exports = MessagesRoutes;

@@ -4,7 +4,7 @@ const MessageSchema = new mongoose.Schema(
   {
     userfrom: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     userto: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    message: { type: String, required: true, trim: true },
+    message: [{ type: String, required: true, trim: true }],
   },
   {
     timestamps: true,
