@@ -30,11 +30,26 @@ const createMessage = async (req, res, next) => {
       },
       { new: true }
     );
-    const returnmessage = Message.findById(createdMessage);
-    console.log(returnmessage);
     return res.status(201).json(createdMessage);
   } catch (error) {
     return next(error);
+  }
+};
+
+const returMessage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const originalMessage = await Message.findByIdAndUpdate(
+      id,
+      {
+        $push: { message: req.body.message },
+      },
+      { new: true }
+    );
+    console.log(id);
+    return res.status(200).json(originalMessage);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -52,4 +67,5 @@ module.exports = {
   getAllMessages,
   createMessage,
   deleteMessage,
+  returMessage,
 };
