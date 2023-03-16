@@ -60,6 +60,62 @@ const updateProduct = async (req, res, next) => {
     return next(error);
   }
 };
+const addFavorites = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    const user = await User.findById(req.user._id);
+    if (!product.users.includes(req.user._id)) {
+      const favoriteProduct = await Product.findByIdAndUpdate(
+        id,
+        {
+          $push: { users: user },
+        },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        user,
+        {
+          $push: { favorites: id },
+        },
+        { new: true }
+      );
+      res.status(200).json({
+        user: user,
+        product: favoriteProduct,
+      });
+    } else {
+      return next("favorite already exists");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+const deleteFavorite = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: { favorites: product._id },
+      },
+      { new: true }
+    );
+    const favorite = await Product.findByIdAndUpdate(
+      id,
+      {
+        $pull: { users: req.user._id },
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({ user: user, product: favorite });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 const deleteProduct = async (req, res, next) => {
   try {
@@ -80,4 +136,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  addFavorites,
+  deleteFavorite,
 };

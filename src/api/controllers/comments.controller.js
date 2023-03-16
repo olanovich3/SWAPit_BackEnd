@@ -1,5 +1,6 @@
 const Comment = require("../models/comment.model");
 const Product = require(`../models/product.model`);
+const User = require(`../models/user.model`);
 
 const getAllComments = async (req, res, next) => {
   try {
@@ -22,20 +23,16 @@ const createComment = async (req, res, next) => {
       product: product,
       comment: comment,
     });
-    const createdComment = await newComment.save();
-    return res.status(201).json(createdComment);
-  } catch (error) {
-    return next(error);
-  }
-};
 
-const updateComment = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const updatedComment = await Comment.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    return res.status(200).json(updatedComment);
+    const createdComment = await newComment.save();
+    await User.findByIdAndUpdate(
+      owner,
+      {
+        $push: { comments: createdComment._id },
+      },
+      { new: true }
+    );
+    return res.status(201).json(createdComment);
   } catch (error) {
     return next(error);
   }
@@ -45,6 +42,18 @@ const deleteComment = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedComment = await Comment.findByIdAndDelete(id);
+    if (deletedComment) {
+      await User.findByIdAndUpdate(
+        deletedComment,
+        {
+          $pull: { comments: deletedComment },
+        },
+        { new: true }
+      );
+    } else {
+      return next("not comment found");
+    }
+
     res.status(200).json(deletedComment);
   } catch (error) {
     return next(error);
@@ -54,6 +63,5 @@ const deleteComment = async (req, res, next) => {
 module.exports = {
   getAllComments,
   createComment,
-  updateComment,
   deleteComment,
 };
