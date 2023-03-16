@@ -64,8 +64,11 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deleteProduct = await Product.findByIdAndDelete(id);
-    res.status(200).json(deleteProduct);
+    await Product.findByIdAndDelete(id);
+    const user = await User.findById(req.user._id);
+    await user.products.pull(id); // Elimina el elemento con el id especificado de la matriz 'favorites'
+    await user.save();
+    res.status(200).json(user);
   } catch (error) {
     return next(error);
   }
