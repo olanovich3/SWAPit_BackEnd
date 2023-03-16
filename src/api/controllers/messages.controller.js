@@ -1,4 +1,6 @@
 const Message = require("../models/message.model");
+const Product = require("../models/product.model");
+const User = require("../models/user.model");
 
 const getAllMessages = async (req, res, next) => {
   try {
@@ -11,21 +13,26 @@ const getAllMessages = async (req, res, next) => {
 
 const createMessage = async (req, res, next) => {
   try {
-    const newMessage = new Message(req.body);
-    const createdMessage = await newMessage.save();
-    return res.status(201).json(createdMessage);
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const updateMessage = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const updatedMessage = await Message.findByIdAndUpdate(id, req.body, {
-      new: true,
+    const { product } = req.params;
+    const chatProduct = await Product.findById(product);
+    const owner = chatProduct.owner;
+    const newMessage = new Message({
+      userfrom: req.user._id,
+      userto: owner,
+      message: req.body.message,
     });
-    return res.status(200).json(updatedMessage);
+
+    const createdMessage = await newMessage.save();
+    await User.findByIdAndUpdate(
+      owner,
+      {
+        $push: { chat: createdMessage._id },
+      },
+      { new: true }
+    );
+    const returnmessage = Message.findById(createdMessage);
+    console.log(returnmessage);
+    return res.status(201).json(createdMessage);
   } catch (error) {
     return next(error);
   }
@@ -44,6 +51,5 @@ const deleteMessage = async (req, res, next) => {
 module.exports = {
   getAllMessages,
   createMessage,
-  updateMessage,
   deleteMessage,
 };
