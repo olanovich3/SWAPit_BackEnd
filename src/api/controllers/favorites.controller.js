@@ -30,11 +30,11 @@ const addFavorite = async (req, res, next) => {
 const deleteFavorite = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deletedFavorite = await Favorite.findByIdAndDelete(id);
-    await User.findByIdAndDelete(req.user._id, {
-      favorites: deletedFavorite._id,
-    });
-    res.status(200).json(deletedFavorite);
+    await Favorite.findByIdAndDelete(id);
+    const user = await User.findById(req.user._id);
+    await user.favorites.pull(id); // Elimina el elemento con el id especificado de la matriz 'favorites'
+    await user.save(); // Guarda los cambios en la base de datos
+    res.status(200).json(user);
   } catch (error) {
     return next(error);
   }
