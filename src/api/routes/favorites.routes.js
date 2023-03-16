@@ -1,4 +1,5 @@
 const express = require("express");
+const { isAuth } = require("../../middlewares/auth.middleware");
 
 const {
   addFavorite,
@@ -6,10 +7,10 @@ const {
   getAllFavorites,
 } = require("../controllers/favorites.controller");
 
-const CommentsRoutes = express.Router();
+const FavoritesRoutes = express.Router();
 
-CommentsRoutes.get("/", getAllFavorites);
-CommentsRoutes.post("/", addFavorite);
-CommentsRoutes.delete("/:id", deleteFavorite);
+FavoritesRoutes.get("/", getAllFavorites);
+FavoritesRoutes.post("/:product", [isAuth], addFavorite);
+FavoritesRoutes.delete("/:id", [isAuth], deleteFavorite);
 
-module.exports = CommentsRoutes;
+module.exports = FavoritesRoutes;
