@@ -61,13 +61,11 @@ const logoutUser = (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userobject = await User.findById(id);
-    console.log(userobject);
-    await userobject.products.map((prod) =>
-      Product.findByIdAndDelete(prod._id)
-    );
+
+    await Product.deleteMany({ owner: id });
 
     await User.findByIdAndDelete(id);
+
     return res.status(200).json("user deleted");
   } catch (error) {
     return next("Error deleting user", error);

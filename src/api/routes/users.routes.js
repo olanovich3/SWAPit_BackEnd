@@ -16,8 +16,8 @@ UsersRoutes.get("/:id", getUserById);
 UsersRoutes.get("/", getAllUsers);
 UsersRoutes.post("/login", loginUser);
 UsersRoutes.post("/logout", logoutUser);
-UsersRoutes.post("/register", upload.single("image"), registerUser);
-UsersRoutes.patch("/:id", upload.single("image"), updateUser);
+UsersRoutes.post("/register", upload.single("avatar"), registerUser);
+UsersRoutes.patch("/:id", upload.single("avatar"), updateUser);
 UsersRoutes.delete("/:id", deleteUser);
 
 module.exports = UsersRoutes;

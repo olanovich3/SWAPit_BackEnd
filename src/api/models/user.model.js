@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       enum: ["madrid", "barcelona"],
     },
-    image: { type: String, required: true, trim: true },
+    avatar: { type: String, required: true, trim: true },
     email: {
       type: String,
       required: true,
@@ -35,7 +35,6 @@ const UserSchema = new mongoose.Schema(
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-    chat: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
   },
   {
     timestamps: true,
