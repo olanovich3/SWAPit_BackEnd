@@ -16,7 +16,12 @@ ProductsRoutes.get("/", getAllProducts);
 ProductsRoutes.get("/:id", getProductByID);
 ProductsRoutes.put("/favorites/:id", [isAuth], addFavorites);
 ProductsRoutes.patch("/favorites/:id", [isAuth], deleteFavorite);
-ProductsRoutes.post("/", [isAuth], upload.single("images"), createProduct);
+ProductsRoutes.post(
+  "/",
+  [isAuth],
+  upload.single("image1", "image2"),
+  createProduct
+);
 ProductsRoutes.patch("/:id", upload.single("images"), updateProduct);
 ProductsRoutes.delete("/:id", [isAuth], deleteProduct);
 
