@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    rating: [{ type: Number, default: 0 }],
   },
   {
     timestamps: true,

@@ -8,7 +8,7 @@ const registerUser = async (req, res, next) => {
   try {
     const newUSer = new User({
       ...req.body,
-      image: req.file
+      avatar: req.file
         ? req.file.path
         : "https://res.cloudinary.com/dlvbfzkt9/image/upload/v1678116548/Resources/jh3tdhrmyrr0kulwykgl.png",
     });
@@ -27,7 +27,7 @@ const registerUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await User.find().populate("comments");
+    const allUsers = await User.find().populate("comments products favorites");
     return res.status(200).json(allUsers);
   } catch (error) {
     return next("not user found", error);

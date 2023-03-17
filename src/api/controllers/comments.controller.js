@@ -15,6 +15,7 @@ const createComment = async (req, res, next) => {
   try {
     const { product } = req.params;
     const comment = req.body.comment;
+    const rating = req.body.rating;
     const commentProduct = await Product.findById(product);
     const owner = commentProduct.owner;
     const newComment = new Comment({
@@ -22,13 +23,14 @@ const createComment = async (req, res, next) => {
       userto: owner,
       product: product,
       comment: comment,
+      rating: rating,
     });
 
     const createdComment = await newComment.save();
     await User.findByIdAndUpdate(
       owner,
       {
-        $push: { comments: createdComment._id },
+        $push: { comments: createdComment._id, rating: createdComment.rating },
       },
       { new: true }
     );
