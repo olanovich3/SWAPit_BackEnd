@@ -42,17 +42,6 @@ const deleteComment = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedComment = await Comment.findByIdAndDelete(id);
-    if (deletedComment) {
-      await User.findByIdAndUpdate(
-        deletedComment,
-        {
-          $pull: { comments: deletedComment },
-        },
-        { new: true }
-      );
-    } else {
-      return next("not comment found");
-    }
 
     res.status(200).json(deletedComment);
   } catch (error) {

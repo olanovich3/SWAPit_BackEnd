@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../../utils/token");
 const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
+const Product = require("../models/product.model");
 
 const registerUser = async (req, res, next) => {
   try {
@@ -60,12 +61,19 @@ const logoutUser = (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const userobject = await User.findById(id);
+    console.log(userobject);
+    await userobject.products.map((prod) =>
+      Product.findByIdAndDelete(prod._id)
+    );
+
     await User.findByIdAndDelete(id);
     return res.status(200).json("user deleted");
   } catch (error) {
     return next("Error deleting user", error);
   }
 };
+
 const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
