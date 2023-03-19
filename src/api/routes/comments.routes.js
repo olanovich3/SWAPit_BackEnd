@@ -3,13 +3,14 @@ const { isAuth } = require("../../middlewares/auth.middleware");
 const {
   getAllComments,
   createComment,
-
+  getCommentsByUser,
   deleteComment,
 } = require("../controllers/comments.controller");
 
 const CommentsRoutes = express.Router();
 
 CommentsRoutes.get("/", getAllComments);
+CommentsRoutes.get("/users", [isAuth], getCommentsByUser);
 CommentsRoutes.post("/:product", [isAuth], createComment);
 CommentsRoutes.delete("/:id", deleteComment);
 
