@@ -20,12 +20,27 @@ const getProductByID = async (req, res, next) => {
     return next(error);
   }
 };
+const getProductByCategory = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const products = await Product.find({ category: category });
+    if (products != null) {
+      return res.status(404).json("not products found on category");
+    } else {
+      return res.status(200).json(products);
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
 
 const createProduct = async (req, res, next) => {
   try {
     const newProduct = new Product({
       ...req.body,
-      images: req.file ? req.file.path : "not found",
+      image1: req.files.image1 ? req.files.image1[0].path : null,
+      image2: req.files.image2 ? req.files.image2[0].path : null,
+      image3: req.files.image3 ? req.files.image3[0].path : null,
       owner: req.user._id,
     });
 
@@ -47,10 +62,25 @@ const updateProduct = async (req, res, next) => {
     const newProduct = await Product(req.body);
     newProduct._id = id;
     const originalProduct = await Product.findById(id);
-    if (req.file) {
-      deleteImgCloudinary(originalProduct.images);
-      newProduct.images = req.file.path;
+    if (req.files.image1) {
+      deleteImgCloudinary(originalProduct.image1);
+      newProduct.image1 = req.files.image1[0].path;
+    } else {
+      newProduct.image1 = originalProduct.image1;
     }
+    if (req.files.image2) {
+      deleteImgCloudinary(originalProduct.image2);
+      newProduct.image2 = req.files.image2[0].path;
+    } else {
+      newProduct.image2 = originalProduct.image2;
+    }
+    if (req.files.image3) {
+      deleteImgCloudinary(originalProduct.image3);
+      newProduct.image3 = req.files.image3[0].path;
+    } else {
+      newProduct.image3 = originalProduct.image3;
+    }
+
     await Product.findByIdAndUpdate(id, newProduct);
     return res.status(200).json({
       new: newProduct,
@@ -138,4 +168,5 @@ module.exports = {
   deleteProduct,
   addFavorites,
   deleteFavorite,
+  getProductByCategory,
 };

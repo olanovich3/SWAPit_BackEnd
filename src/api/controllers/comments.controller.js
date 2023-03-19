@@ -10,7 +10,14 @@ const getAllComments = async (req, res, next) => {
     return next(error);
   }
 };
-
+const getCommentsByUser = async (req, res, next) => {
+  try {
+    const comment = await Comment.find({ userto: req.user._id });
+    return res.status(200).json(comment);
+  } catch (error) {
+    next(error);
+  }
+};
 const createComment = async (req, res, next) => {
   try {
     const { product } = req.params;
@@ -55,4 +62,5 @@ module.exports = {
   getAllComments,
   createComment,
   deleteComment,
+  getCommentsByUser,
 };
