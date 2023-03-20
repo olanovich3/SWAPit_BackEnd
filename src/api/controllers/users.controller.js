@@ -42,7 +42,7 @@ const loginUser = async (req, res, next) => {
     }
     if (bcrypt.compareSync(req.body.password, user.password)) {
       const token = generateToken(user._id, user.email);
-      return res.status(200).json(token);
+      return res.status(200).json({ user, token });
     }
   } catch (error) {
     return next("User cannot login", error);
