@@ -1,12 +1,14 @@
 const Chat = require("../models/chat.model");
 const Product = require("../models/product.model");
 
-const getAllChats = async (req, res, next) => {
+const getChatsByUser = async (req, res, next) => {
   try {
-    const Chats = await Chat.find();
-    return res.status(200).json(Chats);
+    const chat = await Chat.find({
+      $or: [{ userto: req.user._id }, { userfrom: req.user._id }],
+    });
+    return res.status(200).json(chat);
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
@@ -46,7 +48,7 @@ const deleteChat = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllChats,
   createChat,
   deleteChat,
+  getChatsByUser,
 };
