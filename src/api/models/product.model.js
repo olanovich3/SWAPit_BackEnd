@@ -8,11 +8,6 @@ const ProductSchema = new mongoose.Schema(
     image2: { type: String, required: false, trim: true },
     image3: { type: String, required: false, trim: true },
     description: { type: String, required: false, trim: true },
-    location: {
-      type: String,
-      required: false,
-      trim: true,
-    },
     category: {
       type: String,
       required: false,
