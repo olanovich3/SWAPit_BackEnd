@@ -12,7 +12,6 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: false,
       trim: true,
-      enum: ["madrid", "barcelona"],
     },
     category: {
       type: String,
