@@ -10,7 +10,7 @@ const registerUser = async (req, res, next) => {
       ...req.body,
       avatar: req.file
         ? req.file.path
-        : "https://res.cloudinary.com/dlvbfzkt9/image/upload/v1678116548/Resources/jh3tdhrmyrr0kulwykgl.png",
+        : "https://res.cloudinary.com/dnkacmdmh/image/upload/v1679438534/usuario_ow1wp1.png",
     });
     const userExists = await User.findOne({ email: newUSer.email });
 
@@ -19,7 +19,14 @@ const registerUser = async (req, res, next) => {
     }
     const createdUser = await newUSer.save();
     createdUser.password = null;
-    return res.status(201).json(createdUser);
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return next("User not found");
+    }
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      const token = generateToken(user._id, user.email);
+      return res.status(200).json({ token, user: createdUser });
+    }
   } catch (error) {
     return next(error);
   }
@@ -42,7 +49,7 @@ const loginUser = async (req, res, next) => {
     }
     if (bcrypt.compareSync(req.body.password, user.password)) {
       const token = generateToken(user._id, user.email);
-      return res.status(200).json({ user, token });
+      return res.status(200).json({ token, user });
     }
   } catch (error) {
     return next("User cannot login", error);
