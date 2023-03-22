@@ -82,7 +82,9 @@ const deleteUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const getUser = await User.findById(id);
+    const getUser = await User.findById(id).populate(
+      "comments products favorites"
+    );
     return res.status(200).json(getUser);
   } catch (error) {
     return next(error);

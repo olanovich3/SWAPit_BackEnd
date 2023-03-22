@@ -4,7 +4,7 @@ const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
 
 const getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("owner");
     return res.status(200).json(products);
   } catch (error) {
     return next(error);
@@ -24,7 +24,7 @@ const getProductByCategory = async (req, res, next) => {
   try {
     const { category } = req.params;
     const products = await Product.find({ category: category });
-    if (products != null) {
+    if (products == null) {
       return res.status(404).json("not products found on category");
     } else {
       return res.status(200).json(products);
