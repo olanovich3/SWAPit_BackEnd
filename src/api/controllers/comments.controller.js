@@ -4,7 +4,7 @@ const User = require(`../models/user.model`);
 
 const getAllComments = async (req, res, next) => {
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find().populate("userfrom userto product");
     return res.status(200).json(comments);
   } catch (error) {
     return next(error);
@@ -12,7 +12,9 @@ const getAllComments = async (req, res, next) => {
 };
 const getCommentsByUser = async (req, res, next) => {
   try {
-    const comment = await Comment.find({ userto: req.user._id });
+    const comment = await Comment.find({ userto: req.user._id }).populate(
+      "userfrom userto product"
+    );
     return res.status(200).json(comment);
   } catch (error) {
     next(error);
