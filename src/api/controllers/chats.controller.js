@@ -5,7 +5,7 @@ const getChatsByUser = async (req, res, next) => {
   try {
     const chat = await Chat.find({
       $or: [{ userto: req.user._id }, { userfrom: req.user._id }],
-    });
+    }).populate("userfrom userto");
     return res.status(200).json(chat);
   } catch (error) {
     next(error);
