@@ -14,7 +14,7 @@ const getAllProducts = async (req, res, next) => {
 const getProductByID = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("owner users chat");
     return res.status(200).json(product);
   } catch (error) {
     return next(error);
@@ -23,7 +23,9 @@ const getProductByID = async (req, res, next) => {
 const getProductByCategory = async (req, res, next) => {
   try {
     const { category } = req.params;
-    const products = await Product.find({ category: category });
+    const products = await Product.find({ category: category }).populate(
+      "owner users chat"
+    );
     if (products == null) {
       return res.status(404).json("not products found on category");
     } else {
