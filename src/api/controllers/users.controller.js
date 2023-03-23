@@ -101,6 +101,7 @@ const updateUser = async (req, res, next) => {
       deleteImgCloudinary(originalUser.image);
       newUser.image = req.file.path;
     }
+    newUser.products = originalUser.products;
     await User.findByIdAndUpdate(id, newUser);
     return res.status(200).json({
       new: newUser,
