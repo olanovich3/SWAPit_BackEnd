@@ -95,9 +95,14 @@ const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const newUser = await User(req.body);
-    newUser._id = id;
-    newUser.password = await bcrypt.hash(req.body.password, 10);
     const originalUser = await User.findById(id);
+    newUser._id = id;
+    if (req.body.password) {
+      newUser.password = await bcrypt.hash(req.body.password, 10);
+    } else {
+      newUser.password = originalUser.password;
+    }
+
     if (req.file) {
       deleteImgCloudinary(originalUser.avatar);
       newUser.avatar = req.file.path;
