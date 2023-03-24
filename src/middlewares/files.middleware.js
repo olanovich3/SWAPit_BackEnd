@@ -15,14 +15,18 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 const deleteImgCloudinary = (imgUrl) => {
-  const imgSplited = imgUrl?.split("/");
-  const nameSplited = imgSplited[imgSplited.length - 1].split(".");
-  const folderSplited = imgSplited[imgSplited.length - 2];
-  const public_id = `${folderSplited}/${nameSplited[0]}`;
+  if (imgUrl) {
+    const imgSplited = imgUrl?.split("/");
+    const nameSplited = imgSplited[imgSplited.length - 1].split(".");
+    const folderSplited = imgSplited[imgSplited.length - 2];
+    const public_id = `${folderSplited}/${nameSplited[0]}`;
 
-  cloudinary.uploader.destroy(public_id, () => {
-    console.log("Image delete in cloudinary");
-  });
+    cloudinary.uploader.destroy(public_id, () => {
+      console.log("Image delete in cloudinary");
+    });
+  } else {
+    return;
+  }
 };
 
 const configCloudinary = () => {
