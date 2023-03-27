@@ -6,7 +6,7 @@ const CommentSchema = new mongoose.Schema(
     userto: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     comment: { type: String, required: true, trim: true },
-    rating: { type: Number, required: false, enum: [1, 2, 3, 4, 5] },
+    rating: { type: Number, required: false, enum: [0, 1, 2, 3, 4, 5] },
   },
   {
     timestamps: true,
