@@ -1,7 +1,7 @@
 const express = require("express");
 const { isAuth } = require("../../middlewares/auth.middleware");
 const {
-  getAllCommentsOwner,
+  getAllComments,
   createComment,
   getCommentsByUser,
   deleteComment,
@@ -9,7 +9,7 @@ const {
 
 const CommentsRoutes = express.Router();
 
-CommentsRoutes.get("/:product", getAllCommentsOwner);
+CommentsRoutes.get("/:id", getAllComments);
 CommentsRoutes.get("/:id", [isAuth], getCommentsByUser);
 CommentsRoutes.post("/:product", [isAuth], createComment);
 CommentsRoutes.delete("/:id", deleteComment);

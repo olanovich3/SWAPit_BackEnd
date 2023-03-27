@@ -2,12 +2,10 @@ const Comment = require("../models/comment.model");
 const Product = require(`../models/product.model`);
 const User = require(`../models/user.model`);
 
-const getAllCommentsOwner = async (req, res, next) => {
+const getAllComments = async (req, res, next) => {
   try {
-    const { product } = req.params;
-    const ownerProduct = await Product.findById(product);
-    const owner = ownerProduct.owner._id;
-    const comments = await Comment.find({ userto: owner }).populate(
+    const { id } = req.params;
+    const comments = await Comment.find({ userto: id }).populate(
       "userfrom userto product"
     );
     return res.status(200).json(comments);
@@ -66,7 +64,7 @@ const deleteComment = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllCommentsOwner,
+  getAllComments,
   createComment,
   deleteComment,
   getCommentsByUser,
