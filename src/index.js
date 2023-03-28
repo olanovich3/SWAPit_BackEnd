@@ -8,6 +8,7 @@ const ProductsRoutes = require("./api/routes/products.routes");
 const CommentsRoutes = require("./api/routes/comments.routes");
 const ChatsRoutes = require("./api/routes/chats.routes");
 const RequestRoutes = require("./api/routes/Request.routes.js");
+const ChatBoxRoutes = require("./api/routes/chatBox.routes");
 
 dotenv.config();
 //CONFIG CLOUDINARYYYYYYYYY
@@ -41,9 +42,9 @@ server.use(express.urlencoded({ limit: "5mb", extended: true }));
 server.use("/api/v1/users", UserRoutes);
 server.use("/api/v1/products", ProductsRoutes);
 server.use("/api/v1/user/comments/", CommentsRoutes);
-server.use("/api/v1/chats", ChatsRoutes);
+server.use("/api/v1/chat", ChatsRoutes);
 server.use("/api/v1/request", RequestRoutes);
-
+server.use("/api/v1/inbox", ChatBoxRoutes);
 //Route not found
 server.use("*", (req, res, next) => {
   const error = new Error("Route not found");

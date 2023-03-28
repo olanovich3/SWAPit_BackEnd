@@ -9,7 +9,7 @@ const {
 
 const ChatBoxRoutes = express.Router();
 
-ChatBoxRoutes.post("/:id", [isAuth], createChatBox);
+ChatBoxRoutes.post("/", [isAuth], createChatBox);
 ChatBoxRoutes.get("/:id", [isAuth], getChatBoxForUser);
 ChatBoxRoutes.delete("/:id", deleteChatBox);
 ChatBoxRoutes.patch("/:id", [isAuth], updateChatBox);
