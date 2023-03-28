@@ -1,5 +1,5 @@
 const Chat = require("../models/chat.model");
-const ChatBox = require("./models/ChatBox");
+const ChatBox = require("../models/chatBox.model");
 
 // Controlador para obtener la caja de chat correspondiente a un usuario logueado
 const getChatBoxForUser = async (req, res, next) => {
