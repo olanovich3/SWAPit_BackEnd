@@ -19,6 +19,7 @@ const createRequest = async (req, res, next) => {
       userfrom: req.user._id,
       userto: owner,
       product: product,
+      message: req.body.message,
     });
     const createdRequest = await newRequest.save();
     return res.status(200).json(createdRequest);
@@ -33,7 +34,7 @@ const HandleRequest = async (req, res, next) => {
     const { status } = req.body;
     const updatedRequest = await Request.findByIdAndUpdate(
       id,
-      { status },
+      { status, message: req.body.message },
       { new: true }
     );
 
@@ -47,8 +48,19 @@ const HandleRequest = async (req, res, next) => {
   }
 };
 
+const deleteRequest = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Request.findByIdAndDelete(id);
+    return res.status(200).json("request deleted");
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   createRequest,
   HandleRequest,
   getAllRequest,
+  deleteRequest,
 };

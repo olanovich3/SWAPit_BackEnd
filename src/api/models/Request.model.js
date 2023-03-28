@@ -5,6 +5,7 @@ const SolicitudSchema = new mongoose.Schema(
     userfrom: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     userto: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    message: { type: String, required: false, trim: true },
     status: {
       type: String,
       required: false,
