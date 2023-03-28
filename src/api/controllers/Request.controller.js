@@ -47,9 +47,20 @@ const HandleRequest = async (req, res, next) => {
     return next(error);
   }
 };
+const deleteRequest = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deletedRequest = await Request.findByIdAndDelete(id);
+
+    res.status(200).json(deletedRequest);
+  } catch (error) {
+    return next(error);
+  }
+};
 
 module.exports = {
   createRequest,
   HandleRequest,
   getAllRequest,
+  deleteRequest,
 };

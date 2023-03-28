@@ -7,7 +7,7 @@ const UserRoutes = require("./api/routes/users.routes");
 const ProductsRoutes = require("./api/routes/products.routes");
 const CommentsRoutes = require("./api/routes/comments.routes");
 const ChatsRoutes = require("./api/routes/chats.routes");
-const RequestRoutes = require("./api/routes/Request.routes.js");
+const RequestRoutes = require("./api/routes/Request.routes");
 const ChatBoxRoutes = require("./api/routes/chatBox.routes");
 
 dotenv.config();
