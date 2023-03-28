@@ -7,6 +7,7 @@ const UserRoutes = require("./api/routes/users.routes");
 const ProductsRoutes = require("./api/routes/products.routes");
 const CommentsRoutes = require("./api/routes/comments.routes");
 const ChatsRoutes = require("./api/routes/chats.routes");
+const RequestRoutes = require("./api/routes/Request.routes.js");
 
 dotenv.config();
 //CONFIG CLOUDINARYYYYYYYYY
@@ -41,6 +42,7 @@ server.use("/api/v1/users", UserRoutes);
 server.use("/api/v1/products", ProductsRoutes);
 server.use("/api/v1/user/comments/", CommentsRoutes);
 server.use("/api/v1/chats", ChatsRoutes);
+server.use("/api/v1/request", RequestRoutes);
 
 //Route not found
 server.use("*", (req, res, next) => {
