@@ -16,9 +16,11 @@ const createChat = async (req, res, next) => {
   try {
     const { product } = req.params;
     const chatProduct = await Product.findById(product);
-    const owner = chatProduct.owner;
+    const userfrom = req.user._id;
+    const owner =
+      chatProduct.owner === userfrom ? chatProduct.userto : chatProduct.owner;
     const newChat = new Chat({
-      userfrom: req.user._id,
+      userfrom,
       userto: owner,
       chat: req.body.chat,
     });
