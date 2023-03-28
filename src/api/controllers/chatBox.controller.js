@@ -18,7 +18,7 @@ const getChatBoxForUser = async (req, res, next) => {
       });
 
     if (!chatBox) {
-      return res.status(404).json({ error: "No se encontró la caja de chat" });
+      return res.status(404).json({ error: "No se encontró el chat" });
     }
 
     // Verificamos si el usuario logueado es el usuario1 o el usuario2 y devolvemos la información correspondiente
@@ -105,11 +105,10 @@ const updateChatBox = async (chatboxId, chatId) => {
         ...chatbox.chat.slice(chatIndex + 1),
       ],
     };
-
-    await User.findByIdAndUpdate(chatbox.user1, {
+    await chatbox.user1.findByIdAndUpdate(chatbox.user1, {
       $set: { chatbox: newChatbox },
     });
-    await User.findByIdAndUpdate(chatbox.user2, {
+    await chatbox.user2.findByIdAndUpdate(chatbox.user2, {
       $set: { chatbox: newChatbox },
     });
   } catch (error) {

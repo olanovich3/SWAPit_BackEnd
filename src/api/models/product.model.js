@@ -41,7 +41,6 @@ const ProductSchema = new mongoose.Schema(
       enum: ["available", "reserved", "not available"],
     },
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    chat: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chat" }],
   },
   {
     timestamps: true,

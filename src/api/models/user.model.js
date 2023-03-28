@@ -6,12 +6,6 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     lastname: { type: String, required: true, trim: true },
-    gender: {
-      type: String,
-      required: true,
-      trim: true,
-      enum: ["female", "male"],
-    },
     birthdate: { type: Date, required: true, trim: true },
     location: {
       type: String,
@@ -35,6 +29,7 @@ const UserSchema = new mongoose.Schema(
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     rating: [{ type: Number, default: 0 }],
+    chat: [{ type: mongoose.Schema.Types.ObjectId, ref: "ChatBox" }],
   },
   {
     timestamps: true,

@@ -8,7 +8,7 @@ const {
 
 const ChatsRoutes = express.Router();
 
-ChatsRoutes.post("/:product", [isAuth], createChat);
+ChatsRoutes.post("/:chatBox", [isAuth], createChat);
 ChatsRoutes.get("/", [isAuth], getChatsByUser);
 ChatsRoutes.delete("/:id", deleteChat);
 
