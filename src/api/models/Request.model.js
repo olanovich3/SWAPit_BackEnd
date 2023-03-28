@@ -12,6 +12,7 @@ const SolicitudSchema = new mongoose.Schema(
       trim: true,
       enum: ["pending", "accepted", "rejected"],
     },
+    message: { type: String, required: false, trim: true },
   },
   {
     timestamps: true,
