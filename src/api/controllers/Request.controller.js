@@ -19,6 +19,7 @@ const createRequest = async (req, res, next) => {
       userfrom: req.user._id,
       userto: owner,
       product: product,
+      message: req.body.message,
     });
     const createdRequest = await newRequest.save();
     return res.status(200).json(createdRequest);
