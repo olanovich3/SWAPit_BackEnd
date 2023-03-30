@@ -98,7 +98,7 @@ const updateUser = async (req, res, next) => {
     const originalUser = await User.findById(id);
     newUser._id = id;
     if (req.body.password) {
-      newUser.password = req.body.password;
+      newUser.password = await bcrypt.hash(req.body.password, 10);
     } else {
       newUser.password = originalUser.password;
     }

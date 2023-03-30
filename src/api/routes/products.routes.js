@@ -15,6 +15,7 @@ const ProductsRoutes = express.Router();
 
 ProductsRoutes.get("/", getAllProducts);
 ProductsRoutes.get("/:id", getProductByID);
+
 ProductsRoutes.get("/categories/:category", getProductByCategory);
 ProductsRoutes.put("/favorites/:id", [isAuth], addFavorites);
 ProductsRoutes.patch("/favorites/:id", [isAuth], deleteFavorite);
