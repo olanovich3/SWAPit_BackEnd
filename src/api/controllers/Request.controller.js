@@ -14,10 +14,10 @@ const createRequest = async (req, res, next) => {
   try {
     const { product } = req.params;
     const solicitedProduc = await Product.findById(product);
-    const owner = solicitedProduc.owner._id;
+
     const newRequest = new Request({
       userfrom: req.user._id,
-      userto: owner,
+      userto: solicitedProduc.owner._id,
       product: product,
       message: req.body.message,
     });
