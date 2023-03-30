@@ -20,6 +20,7 @@ const getProductByID = async (req, res, next) => {
     return next(error);
   }
 };
+
 const getProductByCategory = async (req, res, next) => {
   try {
     const { category } = req.params;
